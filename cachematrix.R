@@ -9,15 +9,15 @@
 ## knows how to access those methods
 
 makeCacheMatrix <- function(x = matrix()) {
-        ## "i" variable contains matrix inverse computed by cacheSolve()
-        ## and is reseted to NULL every time makeCacheMatrix() is called
+## "i" variable contains matrix inverse computed by cacheSolve()
+## and is reseted to NULL every time makeCacheMatrix() is called
         i <- NULL
-        ## get() method returns original matrix used to call makeCacheMatrix()
+## get() method returns original matrix used to call makeCacheMatrix()
         get <- function() {x}
-        ## setinverse() method is used to save matrix inverse computed by cacheSolve()
-        ## "<<-" is used to assign matrix inverse to "i" variable in a parent environment
+## setinverse() method is used to save matrix inverse computed by cacheSolve()
+## "<<-" is used to assign matrix inverse to "i" variable in a parent environment
         setinverse <- function(inverse) {i <<- inverse}
-        ## getinverse() method returns matrix inverse computed by cacheSolve()
+## getinverse() method returns matrix inverse computed by cacheSolve()
         getinverse <- function() {i}
         
         list(set = set, get = get,
@@ -31,18 +31,18 @@ makeCacheMatrix <- function(x = matrix()) {
 ## cacheSolve() returns inverse matrix, either calculated or cached
 
 cacheSolve <- function(x, ...) {
-        ## "i" variable gets matrix inverse computed by cacheSolve() earlier.
-        ## If there is no matrix inverse, NULL is returned by getinverse()
+## "i" variable gets matrix inverse computed by cacheSolve() earlier.
+## If there is no matrix inverse, NULL is returned by getinverse()
         i <- x$getinverse()
         if(!is.null(i)) {
                 message("getting cached data")
                 return(i)
         }
-        ## "data" variable gets original matrix used to call makeCacheMatrix()
+## "data" variable gets original matrix used to call makeCacheMatrix()
         data <- x$get()
-        ## "i" variable is used to store calculated matrix inverse 
+## "i" variable is used to store calculated matrix inverse 
         i <- solve(data, ...)
-        ## sets inverse matrix variable in makeCacheMatrix() object
+## sets inverse matrix variable in makeCacheMatrix() object
         x$setinverse(i)
         i
 }
